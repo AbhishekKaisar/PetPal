@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "pg": "^8.11.3",
+    "bcryptjs": "^2.4.3",
+    "cookie": "^0.6.0"
   }
 }

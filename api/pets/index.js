@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
             res.status(200).json(result.rows);
         } catch (error) {
             console.error('Error fetching pets:', error);
-            res.status(500).json({ error: 'Internal server error' });
+            res.status(500).json({ error: error.message });
         }
     } else if (req.method === 'POST') {
         // Authenticate

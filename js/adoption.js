@@ -40,14 +40,39 @@ document.addEventListener('DOMContentLoaded', async () => {
                 grid.appendChild(card);
             });
         } catch (error) {
-            grid.innerHTML = '<p style="margin:20px; color:red;">Failed to load pets.</p>';
+            console.error('Load Pets Error:', error);
+            grid.innerHTML = `<div style="text-align: center; padding: 40px;">
+                <p style="color:red; font-size: 18px; margin-bottom: 10px;">Failed to load pets</p>
+                <p style="color: #666; font-size: 13px;">${error.message}</p>
+                <p style="color: #999; font-size: 11px; margin-top: 5px;">Check console for details</p>
+                <button onclick="location.reload()" style="margin-top: 15px; padding: 8px 16px; background: #1f7dd8; color: white; border: none; border-radius: 4px; cursor: pointer;">Retry</button>
+            </div>`;
         }
     }
 
     // Initial load
     loadPets();
 
-    // Wire filters (Example for Type: Dog/Cat)
+    // Wire up the Apply Filter button
+    const applyBtn = document.querySelector('.btn-apply-filter');
+    if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+            const breed = document.getElementById('breedFilter').value;
+            const gender = document.getElementById('genderFilter').value;
+            const age = document.getElementById('ageFilter').value;
+
+            // Get active type
+            const activeTypePill = document.querySelector('.pet-type-pill.active');
+            const type = activeTypePill ? activeTypePill.querySelector('span').innerText.toLowerCase() : '';
+
+            // Note: Location, Distance, Size, Color are not yet supported by API, but we could collect them similarly
+
+            loadPets({ type, breed, gender, age });
+        });
+    }
+
+    // Wire Type pills to trigger load immediately (or could wait for Apply)
+    // Keeping immediate behavior for Type as it feels like a category switch
     const typePills = document.querySelectorAll('.pet-type-pill');
     typePills.forEach(pill => {
         pill.addEventListener('click', () => {
@@ -55,15 +80,27 @@ document.addEventListener('DOMContentLoaded', async () => {
             typePills.forEach(p => p.classList.remove('active'));
             pill.classList.add('active');
 
-            // Fetch with filter
-            const type = pill.querySelector('span').innerText.toLowerCase(); // 'Cat' or 'Dog'
-            loadPets({ type });
+            // Collect other filters too so we don't lose them
+            const breed = document.getElementById('breedFilter').value;
+            const gender = document.getElementById('genderFilter').value;
+            const age = document.getElementById('ageFilter').value;
+
+            const type = pill.querySelector('span').innerText.toLowerCase();
+            loadPets({ type, breed, gender, age });
         });
     });
 
     // Reset filters
     document.querySelector('.filters-reset').addEventListener('click', () => {
-        loadPets({});
+        document.getElementById('breedFilter').value = '';
+        document.getElementById('genderFilter').value = '';
+        document.getElementById('ageFilter').value = '';
+        // Reset type to first one or 'active'? Default to Cat as per HTML
+        const type = 'cat';
+        typePills.forEach(p => p.classList.remove('active'));
+        if (typePills[0]) typePills[0].classList.add('active'); // Assume Cat is first
+
+        loadPets({ type });
     });
 });
 

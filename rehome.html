@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PetPal – Rehome your Pet</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1f7dd8;
+      --primary-dark: #1155a3;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --bg-light: #f6fafc;
+      --border-light: #e3e7ed;
+      --shadow-soft: 0 8px 24px rgba(15, 28, 63, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--text-main);
+      background-color: #ffffff;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background: none;
+    }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Top search bar */
+    .top-search-bar {
+      background: var(--primary);
+      padding: 6px 0;
+    }
+
+    .top-search-inner {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 260px;
+      max-width: 100%;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 34px 8px 10px;
+      border-radius: 100px;
+      border: none;
+      font-size: 13px;
+    }
+
+    .search-box span {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--primary);
+      pointer-events: none;
+    }
+
+    /* Header / Navbar */
+    header {
+      background: #ffffff;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      gap: 16px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-area img {
+      height: 40px;
+      object-fit: contain;
+      display: block;
+    }
+
+    nav ul {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    nav a {
+      color: #333;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .bell {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--primary);
+    }
+
+    .auth-links a {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .auth-links span {
+      color: #bbb;
+      margin: 0 4px;
+    }
+
+    .auth-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .auth-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb-bar {
+      background: #ffffff;
+      border-bottom: 1px solid #edf0f6;
+      padding: 8px 0;
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: #8b93a4;
+    }
+
+    .breadcrumb a {
+      color: #6f7ba0;
+    }
+
+    .breadcrumb span {
+      margin: 0 4px;
+    }
+
+    /* Page content */
+    main {
+      padding: 32px 0 60px;
+      background: #fbfdff;
+    }
+
+    .page-title {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .page-subtext {
+      font-size: 12px;
+      color: #7a849a;
+      max-width: 520px;
+      margin-bottom: 30px;
+    }
+
+    .form-section {
+      margin-bottom: 32px;
+    }
+
+    .section-heading {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #384152;
+    }
+
+    .form-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: 0 8px 24px rgba(15, 28, 63, 0.04);
+      padding: 20px 22px;
+      max-width: 780px;
+    }
+
+    .field-row {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .field-label {
+      font-size: 13px;
+      color: #4b556a;
+      min-width: 210px;
+    }
+
+    .field-label span.required {
+      color: #e55353;
+      margin-left: 2px;
+    }
+
+    .radio-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .radio-option input {
+      accent-color: var(--primary);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      border-radius: 8px;
+      border: 1px solid #d8deea;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 13px;
+      resize: vertical;
+    }
+
+    .text-note {
+      font-size: 11px;
+      color: #9ca3b5;
+      margin-top: 4px;
+    }
+
+    /* Home info section */
+    .two-column-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .field-control {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+    }
+
+    .field-control label {
+      font-size: 12px;
+      color: #4b556a;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 6px;
+      border: 1px solid #d8deea;
+      font-size: 13px;
+    }
+
+    .small-help {
+      font-size: 10px;
+      color: #9ca3b5;
+      margin-top: 2px;
+    }
+
+    /* Terms and actions */
+    .terms-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 24px 0 18px;
+      font-size: 12px;
+      color: #4b556a;
+    }
+
+    .terms-row input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      accent-color: var(--primary);
+    }
+
+    .terms-row a {
+      color: var(--primary);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 780px;
+      margin-top: 10px;
+    }
+
+    .btn-back {
+      padding: 9px 22px;
+      border-radius: 999px;
+      border: 1px solid #cfd6e4;
+      background: #ffffff;
+      font-size: 13px;
+      color: #4b556a;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 9px 24px;
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary i {
+      font-size: 11px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-light);
+      border-top: 1px solid #dde3ee;
+      padding: 32px 0 0;
+      margin-top: 10px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px;
+      margin-bottom: 24px;
+    }
+
+    .footer-column h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .footer-column ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .footer-column ul li a:hover {
+      color: var(--primary);
+    }
+
+    .footer-contact-item {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .newsletter {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-light);
+      font-size: 13px;
+    }
+
+    .newsletter-form button {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .newsletter-form button:hover {
+      background: var(--primary-dark);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 10px;
+      font-size: 16px;
+      color: #6b7a92;
+    }
+
+    .social-icons a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #d2d8e5;
+      margin-top: 10px;
+      padding: 10px 0;
+      font-size: 12px;
+      color: #8a94aa;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav ul {
+        display: none;
+      }
+
+      .form-card {
+        padding: 18px 16px;
+      }
+
+      .field-row {
+        align-items: flex-start;
+      }
+
+      .field-label {
+        min-width: 100%;
+      }
+
+      .two-column-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .two-column-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .form-actions .btn-back,
+      .form-actions .btn-primary {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container navbar">
+      <div class="logo-area">
+        <img src="mainlogo.png" alt="PetPal Logo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="adoption.html">Adopt</a></li>
+          <li><a href="rehome.html">Rehome</a></li>
+          <li><a href="#">Vets</a></li>
+          <li><a href="#">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <div class="bell"><i class="fa-regular fa-bell"></i></div>
+        <div class="auth-links">
+          <a href="#">Login</a><span>|</span><a href="#">Register</a>
+        </div>
+        <button class="auth-btn">Join Now</button>
+      </div>
+    </div>
+    <div class="top-search-bar">
+      <div class="container top-search-inner">
+        <div class="search-box">
+          <input type="text" placeholder="search ..." />
+          <span><i class="fa-solid fa-magnifying-glass"></i></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-bar">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="home.html">Home</a><span>&gt;</span>
+        <a href="#">Adopt</a><span>&gt;</span>
+        <span>Choose to Adopt</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <main>
+    <div class="container">
+      <h1 class="page-title">Rehome your Pet</h1>
+      <p class="page-subtext">
+        Please note, all these details must be complete in order to apply for rehome your pet.
+      </p>
+
+      <!-- Basic Information -->
+      <section class="form-section">
+        <h2 class="section-heading">Basic Information:</h2>
+        <div class="form-card">
+          <div class="field-row">
+            <div class="field-label">Are you rehoming a dog or cat?</div>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="petType" value="dog" />
+                <span>Dog</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="petType" value="cat" />
+                <span>Cat</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-label">Is your pet spayed or neutered?</div>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="spayed" value="yes" />
+                <span>Yes</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="spayed" value="no" />
+                <span>No</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+            <div class="field-label">Why do you need to rehome your pet?</div>
+            <textarea placeholder="Write the reason in short!"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pet Information (Replaced Home Information) -->
+      <section class="form-section">
+        <h2 class="section-heading">Pet Details:</h2>
+        <div class="form-card">
+          <div class="field-row">
+            <div class="field-label">Pet Name <span class="required">*</span></div>
+            <input type="text" id="petName" class="field-control" style="flex:1" placeholder="e.g. Bella" />
+          </div>
+
+          <div class="two-column-row">
+            <div class="field-control">
+              <label>Age (years) <span class="required">*</span></label>
+              <input type="number" id="petAge" min="0" value="1" />
+            </div>
+            <div class="field-control">
+              <label>Gender <span class="required">*</span></label>
+              <select id="petGender">
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+              </select>
+            </div>
+            <div class="field-control">
+              <label>Breed <span class="required">*</span></label>
+              <select id="petBreed">
+                <option value="Deshi">Deshi</option>
+                <option value="Bideshi">Bideshi</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="two-column-row" style="margin-top:14px;">
+            <div class="field-control">
+              <label>Vaccinated?</label>
+              <select id="petVaccinated">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="field-control">
+              <label>Potty Trained?</label>
+              <select id="petPotty">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="field-control">
+              <label>Image URL</label>
+              <input type="text" id="petImage" placeholder="https://..." />
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="terms-row">
+        <input type="checkbox" id="terms" />
+        <label for="terms">
+          I have read and agree to the Terms and <a href="#">Privacy Policy</a>.
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-back">
+          <i class="fa-solid fa-chevron-left"></i>
+          Back
+        </button>
+        <button class="btn-primary">
+          Continue
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+    </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-column">
+          <h4>How Can We Help?</h4>
+          <ul>
+            <li><a href="#">Adopt a pet</a></li>
+            <li><a href="#">Rehome a pet</a></li>
+            <li><a href="#">Adopt FAQ's</a></li>
+            <li><a href="#">Rehome FAQ's</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Contact Us</h4>
+          <div class="footer-contact-item">📍 123 Main Street, Anytown, USA</div>
+          <div class="footer-contact-item">📞 +1 (555) 123-4567</div>
+          <div class="footer-contact-item">✉️ FurryFriendsSupport@gmail.com</div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Keep In Touch With Us</h4>
+          <div class="newsletter">
+            Join the magazine and be first to hear about news.
+          </div>
+          <form class="newsletter-form">
+            <input type="email" placeholder="E-mail Address" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+            <a href="#" aria-label="Tumblr"><i class="fa-brands fa-tumblr"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2025 PetPal. All rights reserved.
+      </div>
+    </div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script>
+    document.querySelector('.btn-primary').addEventListener('click', async () => {
+      const petType = document.querySelector('input[name="petType"]:checked')?.value;
+      const petName = document.getElementById('petName').value;
+      const petAge = document.getElementById('petAge').value;
+      const petGender = document.getElementById('petGender').value;
+      const petBreed = document.getElementById('petBreed').value;
+      const petVaccinated = document.getElementById('petVaccinated').value;
+      const petPotty = document.getElementById('petPotty').value;
+      const petImage = document.getElementById('petImage').value || 'https://placehold.co/400';
+      const reason = document.querySelector('textarea').value;
+
+      if (!petType || !petName || !reason) {
+        alert('Please fill in all required fields');
+        return;
+      }
+
+      const petData = {
+        type: petType,
+        name: petName,
+        age: petAge,
+        gender: petGender,
+        breed: petBreed,
+        vaccinated: petVaccinated,
+        potty_trained: petPotty,
+        image: petImage,
+        reason: reason
+      };
+
+      try {
+        await API.createPet(petData);
+        alert('Pet listed for rehoming!');
+        window.location.href = 'adoption.html';
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+  </script>
+</body>
+
+</html>

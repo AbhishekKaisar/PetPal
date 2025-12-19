@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - PetPal</title>
+
+    <!-- Icons & Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .modal-wrapper {
+            width: 750px;
+            height: 460px;
+            background: #ffffff;
+            border-radius: 16px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* LEFT: LOGIN FORM */
+        .left-panel {
+            width: 50%;
+            padding: 40px 40px;
+            background: #ffffff;
+        }
+
+        .left-panel h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .input-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 10px 12px;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .input-box i {
+            font-size: 15px;
+            color: #555;
+        }
+
+        .input-box input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            margin-bottom: 14px;
+            font-size: 12px;
+        }
+
+        .input-row a {
+            color: #2f80c9;
+            text-decoration: none;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: #2f80c9;
+            color: white;
+            padding: 12px 0;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 18px;
+        }
+
+        .divider {
+            width: 100%;
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .social-icons {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .social-icons i {
+            font-size: 22px;
+            margin: 0 10px;
+            cursor: pointer;
+            color: #2f80c9;
+        }
+
+        .bottom-text {
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .bottom-text a {
+            color: #2f80c9;
+            text-decoration: none;
+        }
+
+        /* RIGHT: LOGO + CAT */
+        .right-panel {
+            width: 50%;
+            background: linear-gradient(140deg, #e8f3ff, #ffffff);
+            position: relative;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .right-panel img.logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .right-panel img.cat {
+            width: 230px;
+            margin-top: 20px;
+        }
+
+        .right-panel-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2f80c9;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="modal-wrapper">
+
+        <!-- LEFT: LOGIN FORM -->
+        <div class="left-panel">
+            <h2>Log In to PetPal</h2>
+
+            <div class="input-box">
+                <i class="fa-regular fa-user"></i>
+                <input type="text" placeholder="Username or Email">
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" placeholder="Password">
+                <i class="fa-regular fa-eye-slash"></i>
+            </div>
+
+            <div class="input-row">
+                <span></span>
+                <a href="#">Forgot Password ?</a>
+            </div>
+
+            <div class="checkbox-row">
+                <input type="checkbox" id="keep-logged-in">
+                <label for="keep-logged-in">Keep me logged in</label>
+            </div>
+
+            <button class="btn-primary">Log In</button>
+
+            <div class="divider">Or Sign Up with</div>
+
+            <div class="social-icons">
+                <i class="fa-brands fa-google"></i>
+                <i class="fa-brands fa-facebook"></i>
+            </div>
+
+            <div class="bottom-text">
+                Don't have an account ? <a href="create_account.html">Sign up</a>
+            </div>
+        </div>
+
+        <!-- RIGHT: LOGO + CAT IMAGE -->
+        <div class="right-panel">
+            <!-- PetPal logo (same as other pages) -->
+            <img src="mainlogo.png" alt="PetPal Logo" class="logo">
+
+            <!-- Cat login image -->
+            <img src="catlogin.png" alt="Cat Login" class="cat">
+
+            <div class="right-panel-text">Log In Now</div>
+        </div>
+
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        document.querySelector('.btn-primary').addEventListener('click', async () => {
+            const inputs = document.querySelector('.left-panel').querySelectorAll('input');
+            // Assuming order: username/email is inputs[0], password is inputs[1]
+            // The first input is actually the search icon wrapper sometimes in these templates, let's be safe.
+            // Looking at the HTML structure:
+            // Input 1: type="text" placeholder="Username or Email"
+            // Input 2: type="password"
+
+            const emailInput = document.querySelector('input[type="text"]');
+            const passwordInput = document.querySelector('input[type="password"]');
+
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            if (!email || !password) {
+                alert('Please enter email and password');
+                return;
+            }
+
+            try {
+                const result = await API.login(email, password);
+                // Redirect to adoption page or home
+                window.location.href = 'adoption.html';
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+</body>
+
+</html>

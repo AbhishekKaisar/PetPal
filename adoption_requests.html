@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PetPal - Adoption Requests</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: #ffffff;
+            color: #222;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 80px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #ffffff;
+        }
+
+        .logo img {
+            height: 48px;
+            object-fit: contain;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #222222;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #2f80c9;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .icon-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid #d0d7e2;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .icon-button i {
+            font-size: 16px;
+            color: #2f80c9;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 12px 4px 4px;
+            border-radius: 999px;
+            border: 1px solid #d0d7e2;
+            background: #ffffff;
+        }
+
+        .avatar-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #2f80c9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-pill span {
+            font-size: 13px;
+            font-weight: 500;
+            color: #222222;
+        }
+
+        /* Thin blue bar under header */
+        .blue-strip {
+            height: 16px;
+            background: #2f80c9;
+        }
+
+        /* MAIN ADMIN SECTION */
+        .admin-wrapper {
+            padding: 30px 80px 60px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #111827;
+            margin-bottom: 18px;
+        }
+
+        .admin-wrapper h1 {
+            font-size: 36px;
+            margin: 0 0 8px;
+        }
+
+        .admin-wrapper h2 {
+            font-size: 24px;
+            margin: 0 0 30px;
+        }
+
+        /* REQUEST CARD */
+        .request-card {
+            border-radius: 14px;
+            border: 2px solid #bcd5f6;
+            background: #f9fbff;
+            padding: 22px 26px 18px;
+            margin-bottom: 32px;
+        }
+
+        .card-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 2.2fr) minmax(260px, 0.9fr);
+            column-gap: 24px;
+        }
+
+        .adopter-column {
+            font-size: 14px;
+        }
+
+        .adopter-column h3 {
+            font-size: 22px;
+            margin: 0 0 10px;
+        }
+
+        .sub-heading {
+            font-weight: 600;
+            margin-top: 8px;
+            margin-bottom: 6px;
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 40px;
+            row-gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .label-bold {
+            font-weight: 600;
+        }
+
+        .info-row span {
+            font-size: 14px;
+        }
+
+        /* ANIMAL INFO BADGE */
+        .animal-panel {
+            background: #dbeafe;
+            border-radius: 14px;
+            padding: 18px 20px;
+            align-self: flex-start;
+        }
+
+        .animal-panel h3 {
+            font-size: 20px;
+            margin: 0 0 10px;
+        }
+
+        .animal-panel p {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+
+        .animal-panel .label-bold {
+            display: inline-block;
+            width: auto;
+        }
+
+        /* ACTION BUTTONS */
+        .card-actions {
+            margin-top: 14px;
+            text-align: right;
+        }
+
+        .btn {
+            padding: 7px 18px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .btn-accept {
+            background: #4ade80;
+            border: 1px solid #16a34a;
+        }
+
+        .btn-decline {
+            background: #f87171;
+            border: 1px solid #dc2626;
+            color: #ffffff;
+        }
+
+        /* FOOTER */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 60px;
+            background: #eef7ff;
+            margin-top: 40px;
+        }
+
+        footer div {
+            width: 30%;
+        }
+
+        footer h4 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="mainlogo.png" alt="PetPal Logo">
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="adoption.html">Adopt</a></li>
+                <li><a href="rehome.html">Rehome</a></li>
+                <li><a href="#">Care Guide</a></li>
+                <li><a href="#about-us">About Us</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="icon-button" aria-label="Notifications">
+                <i class="fa-regular fa-bell"></i>
+            </button>
+            <div class="user-pill">
+                <div class="avatar-circle">S</div>
+                <span>Sumaiya Gazi</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="blue-strip"></div>
+
+    <div class="admin-wrapper">
+        <a href="admin.html" class="back-link">
+            <i class="fa-solid fa-chevron-left"></i>
+            Back
+        </a>
+
+        <h1>Admin Dashboard</h1>
+        <h2>Adoption Requests:</h2>
+
+        <!-- Dynamic Content -->
+        <div id="requests-container"></div>
+        <script src="js/api.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                const container = document.getElementById('requests-container');
+                container.innerHTML = '<p>Loading...</p>';
+
+                try {
+                    const requests = await API.getAdoptionRequests();
+                    container.innerHTML = '';
+
+                    if (requests.length === 0) {
+                        container.innerHTML = '<p>No adoption requests found.</p>';
+                        return;
+                    }
+
+                    requests.forEach(req => {
+                        const card = document.createElement('div');
+                        card.className = 'request-card';
+                        card.innerHTML = `
+                        <div class="card-inner">
+                            <div class="adopter-column">
+                                <h3>Adopter Information</h3>
+                                <div class="sub-heading">Profile Info:</div>
+                                <div class="info-row">
+                                    <span><span class="label-bold">Name:</span> ${req.applicant_name}</span>
+                                    <span><span class="label-bold">Cell:</span> ${req.phone_num}</span>
+                                </div>
+                                <div class="sub-heading" style="margin-top:16px;">Adoption Related Info:</div>
+                                <div class="info-row">
+                                    <span><span class="label-bold">Children:</span> ${req.num_of_children}</span>
+                                    <span><span class="label-bold">Adults:</span> ${req.num_of_adults}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span><span class="label-bold">Animal Proof:</span> ${req.animal_proof}</span>
+                                    <span><span class="label-bold">Other Pets:</span> ${req.other_pets}</span>
+                                </div>
+                            </div>
+                            <div class="animal-panel">
+                                <h3>Animal Info:</h3>
+                                <p><span class="label-bold">Name:</span> ${req.pet_name}</p>
+                                <p><span class="label-bold">ID:</span> ${req.animal_id}</p>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-accept" onclick="alert('Please contact the applicant at ${req.phone_num} to finalize.')">Accept</button>
+                            <button class="btn btn-decline" onclick="declineApp('${req.adoption_id}')">Decline</button>
+                        </div>
+                    `;
+                        container.appendChild(card);
+                    });
+                } catch (error) {
+                    container.innerHTML = '<p>Error loading requests. Ensure you are logged in as admin.</p>';
+                    console.error(error);
+                }
+            });
+        </script>
+    </div>
+
+    <footer>
+        <div>
+            <h4>How Can We Help?</h4>
+            <p>
+                Adopt a pet<br>
+                Rehome a pet<br>
+                Adopt FAQ’s<br>
+                Rehome FAQ’s
+            </p>
+        </div>
+
+        <div>
+            <h4>Contact Us</h4>
+            <p>
+                House 12, Road 5, Baridhara, Dhaka - 1212<br>
+                +8801434884433<br>
+                PetPalSupport@gmail.com
+            </p>
+        </div>
+
+        <div>
+            <h4>Keep In Touch With Us</h4>
+            <input type="email" placeholder="E-mail Address"
+                style="padding:10px;width:70%;border-radius:6px;border:1px solid #aaa;">
+            <button class="btn btn-accept" style="margin-top:10px;">Subscribe</button>
+        </div>
+    </footer>
+
+</body>
+
+</html>

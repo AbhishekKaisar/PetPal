@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PetPal – Adopt a Pet</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1f7dd8;
+      --primary-dark: #1155a3;
+      --accent: #00c2c9;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --bg-light: #f6fafc;
+      --bg-card: #ffffff;
+      --border-light: #e3e7ed;
+      --shadow-soft: 0 8px 24px rgba(15, 28, 63, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--text-main);
+      background-color: #ffffff;
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background: none;
+    }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Top bar with search */
+    .top-search-bar {
+      background: var(--primary);
+      padding: 6px 0;
+    }
+
+    .top-search-inner {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 260px;
+      max-width: 100%;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 34px 8px 10px;
+      border-radius: 100px;
+      border: none;
+      font-size: 13px;
+    }
+
+    .search-box span {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--primary);
+      pointer-events: none;
+    }
+
+    /* Header / Navbar */
+    header {
+      background: #ffffff;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      gap: 16px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-area img {
+      height: 40px;
+      object-fit: contain;
+      display: block;
+    }
+
+    nav ul {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    nav a {
+      color: #333;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .bell {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--primary);
+    }
+
+    .auth-links a {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .auth-links span {
+      color: #bbb;
+      margin: 0 4px;
+    }
+
+    .auth-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .auth-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb-bar {
+      background: #ffffff;
+      border-bottom: 1px solid #edf0f6;
+      padding: 8px 0;
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: #8b93a4;
+    }
+
+    .breadcrumb a {
+      color: #6f7ba0;
+    }
+
+    .breadcrumb span {
+      margin: 0 4px;
+    }
+
+    /* Layout */
+    .adopt-layout {
+      padding: 24px 0 60px;
+      background: #fbfdff;
+    }
+
+    .adopt-grid {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    /* Filters sidebar */
+    .filters-panel {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      padding: 16px 16px 18px;
+      box-shadow: 0 8px 24px rgba(15, 28, 63, 0.04);
+      position: sticky;
+      top: 90px;
+    }
+
+    .filters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .filters-reset {
+      font-size: 11px;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .filters-section-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin: 14px 0 6px;
+      color: #4b556a;
+    }
+
+    .pet-type-toggle {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .pet-type-pill {
+      flex: 1;
+      border-radius: 999px;
+      border: 1px solid var(--border-light);
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      background: #fbfdff;
+    }
+
+    .pet-type-pill.active {
+      border-color: var(--primary);
+      background: #e9f2ff;
+      color: var(--primary);
+    }
+
+    .pet-type-pill i {
+      font-size: 18px;
+    }
+
+    .field-group {
+      margin-bottom: 8px;
+    }
+
+    .field-label {
+      font-size: 11px;
+      color: #7a849a;
+      margin-bottom: 3px;
+    }
+
+    .field-group input,
+    .field-group select {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 6px;
+      border: 1px solid #d8deea;
+      font-size: 12px;
+    }
+
+    .use-location {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .distance-options {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+
+    .distance-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid #d8deea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .distance-pill.active {
+      background: #e9f2ff;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .size-options {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      gap: 4px;
+    }
+
+    .size-pill {
+      flex: 1;
+      border-radius: 999px;
+      border: 1px solid #d8deea;
+      padding: 6px 0;
+      font-size: 11px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .size-pill.active {
+      background: #e9f2ff;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filter-dropdown {
+      border-radius: 6px;
+      border: 1px solid #d8deea;
+      padding: 7px 9px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      margin: 4px 0 8px;
+    }
+
+    .filter-list {
+      max-height: 170px;
+      overflow-y: auto;
+      border-radius: 6px;
+      border: 1px solid #eef1f7;
+      padding: 6px 8px;
+      font-size: 11px;
+      background: #ffffff;
+    }
+
+    .filter-list li {
+      padding: 4px 2px;
+      color: #555f79;
+    }
+
+    .color-list {
+      margin-top: 6px;
+    }
+
+    .color-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid #c4cad8;
+    }
+
+    .color-dot.gold {
+      background: #dba54b;
+    }
+
+    .color-dot.brown {
+      background: #8b5a2b;
+    }
+
+    .color-dot.gray {
+      background: #a0a7b8;
+    }
+
+    .color-dot.black {
+      background: #222222;
+    }
+
+    .color-dot.red {
+      background: #d14a4a;
+    }
+
+    .color-dot.bicolor {
+      background: linear-gradient(90deg, #fff, #555);
+    }
+
+    .color-dot.brindle {
+      background: linear-gradient(135deg, #8b5a2b, #dba54b);
+    }
+
+    .filter-footer {
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .btn-apply-filter {
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Pets list */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .results-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .results-sub {
+      font-size: 12px;
+      color: #7a849a;
+    }
+
+    .results-sort {
+      font-size: 12px;
+      color: #7a849a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .results-sort select {
+      padding: 6px 9px;
+      border-radius: 6px;
+      border: 1px solid #d8deea;
+      font-size: 12px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .pet-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: 0 8px 24px rgba(15, 28, 63, 0.04);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      font-size: 11px;
+    }
+
+    .pet-img-wrap {
+      position: relative;
+      height: 150px;
+      overflow: hidden;
+    }
+
+    .pet-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .badge-new {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #1f7dd8;
+      color: #ffffff;
+      font-size: 9px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    .favorite-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c3ccd9;
+      font-size: 13px;
+    }
+
+    .favorite-btn.active {
+      color: #ff5a7d;
+    }
+
+    .pet-body {
+      padding: 10px 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .pet-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .pet-location {
+      font-size: 11px;
+      color: #8a94aa;
+      margin-bottom: 4px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 6px;
+      font-size: 10px;
+    }
+
+    .meta-label {
+      font-weight: 500;
+    }
+
+    .meta-tag {
+      border-radius: 999px;
+      background: #f5f7fc;
+      padding: 2px 6px;
+      font-size: 9px;
+      border: 1px solid #e0e4f2;
+    }
+
+    .pet-desc {
+      font-size: 11px;
+      color: #6b738b;
+      margin-top: 4px;
+      flex: 1;
+    }
+
+    .card-footer {
+      border-top: 1px solid #edf0f6;
+      padding: 8px 10px 9px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-more-info {
+      background: var(--bg-light);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid #e0e7f4;
+    }
+
+    /* Pagination */
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .page-btn {
+      min-width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      border: 1px solid #d8deea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: #ffffff;
+      color: #6b738b;
+    }
+
+    .page-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .page-btn.arrow {
+      border-radius: 999px;
+      padding: 0 8px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-light);
+      border-top: 1px solid #dde3ee;
+      padding: 32px 0 0;
+      margin-top: 10px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px;
+      margin-bottom: 24px;
+    }
+
+    .footer-column h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .footer-column ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .footer-column ul li a:hover {
+      color: var(--primary);
+    }
+
+    .footer-contact-item {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .newsletter {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-light);
+      font-size: 13px;
+    }
+
+    .newsletter-form button {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .newsletter-form button:hover {
+      background: var(--primary-dark);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 10px;
+      font-size: 16px;
+      color: #6b7a92;
+    }
+
+    .social-icons a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #d2d8e5;
+      margin-top: 10px;
+      padding: 10px 0;
+      font-size: 12px;
+      color: #8a94aa;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .adopt-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters-panel {
+        position: static;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      nav ul {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container navbar">
+      <div class="logo-area">
+        <img src="mainlogo.png" alt="PetPal Logo" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="adoption.html">Adopt</a></li>
+          <li><a href="rehome.html">Rehome</a></li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <div class="bell"><i class="fa-regular fa-bell"></i></div>
+        <div class="auth-links">
+          <a href="#">Login</a><span>|</span><a href="#">Register</a>
+        </div>
+        <button class="auth-btn">Join Now</button>
+      </div>
+    </div>
+    <div class="top-search-bar">
+      <div class="container top-search-inner">
+        <div class="search-box">
+          <input type="text" placeholder="search ..." />
+          <span><i class="fa-solid fa-magnifying-glass"></i></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-bar">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="#">Home</a><span>&gt;</span>
+        <a href="#">Adopt</a><span>&gt;</span>
+        <span>Adopt a pet</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main layout -->
+  <main class="adopt-layout">
+    <div class="container adopt-grid">
+      <!-- Filters -->
+      <aside class="filters-panel">
+        <div class="filters-header">
+          <span>Filters</span>
+          <span class="filters-reset">Reset filters</span>
+        </div>
+
+        <div class="filters-section-title">Pet Type</div>
+        <div class="pet-type-toggle">
+          <div class="pet-type-pill active">
+            <i class="fa-solid fa-cat"></i>
+            <span>Cat</span>
+          </div>
+          <div class="pet-type-pill">
+            <i class="fa-solid fa-dog"></i>
+            <span>Dog</span>
+          </div>
+        </div>
+
+        <div class="filters-section-title">Location</div>
+        <div class="field-group">
+          <div class="field-label">City or Zip</div>
+          <input type="text" placeholder="City or Zip" />
+        </div>
+        <div class="field-group">
+          <div class="field-label">Address</div>
+          <input type="text" placeholder="Ave 11th FL, New York" />
+        </div>
+        <div class="use-location"><i class="fa-solid fa-location-arrow"></i> Use current location</div>
+
+        <div class="filters-section-title">Distance</div>
+        <div class="distance-options">
+          <div class="distance-pill active">0</div>
+          <div class="distance-pill">10</div>
+          <div class="distance-pill">25</div>
+          <div class="distance-pill">50</div>
+        </div>
+
+        <div class="filters-section-title">Size</div>
+        <div class="size-options">
+          <div class="size-pill">Small</div>
+          <div class="size-pill active">Medium</div>
+          <div class="size-pill">Large</div>
+        </div>
+
+        <div class="filters-section-title">Breed</div>
+        <div class="filter-dropdown">
+          <span>Breed</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <ul class="filter-list">
+          <li>German Shepherd</li>
+          <li>Bulldog</li>
+          <li>Labrador Retriever</li>
+          <li>Golden Retriever</li>
+          <li>Beagle</li>
+          <li>Pit Bull</li>
+          <li>Shiba Inu</li>
+          <li>Jack Russell Terrier</li>
+          <li>Cavalier King Charles Spaniel</li>
+          <li>Pembroke Welsh Corgi</li>
+          <li>Newfoundland</li>
+          <li>Poodle</li>
+          <li>Rottweiler</li>
+          <li>Dobermann</li>
+          <li>Chow Chow</li>
+          <li>Siberian Husky</li>
+        </ul>
+
+        <div class="filters-section-title">Color</div>
+        <div class="color-list">
+          <div class="color-item"><span class="color-dot gold"></span> Golden</div>
+          <div class="color-item"><span class="color-dot brown"></span> Brown</div>
+          <div class="color-item"><span class="color-dot gray"></span> Gray</div>
+          <div class="color-item"><span class="color-dot black"></span> Black</div>
+          <div class="color-item"><span class="color-dot red"></span> Red</div>
+          <div class="color-item"><span class="color-dot bicolor"></span> Bicolor</div>
+          <div class="color-item"><span class="color-dot brindle"></span> Brindle</div>
+        </div>
+
+        <div class="filters-section-title">Gender</div>
+        <div class="filter-dropdown">
+          <span>Any</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
+        <div class="filters-section-title">Age</div>
+        <div class="filter-dropdown">
+          <span>Any</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
+        <div class="filter-footer">
+          <button class="btn-apply-filter">Apply your Filter</button>
+        </div>
+      </aside>
+
+      <!-- Results -->
+      <section>
+        <div class="results-header">
+          <div>
+            <div class="results-title">Adopt a pet</div>
+            <div class="results-sub">Showing friendly cats & dogs looking for a new home</div>
+          </div>
+          <div class="results-sort">
+            Sort by
+            <select>
+              <option>Recommended</option>
+              <option>Newest</option>
+              <option>Age (youngest)</option>
+              <option>Age (oldest)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cards-grid">
+          <!-- Pets will be loaded here dynamically -->
+
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <div class="page-btn arrow">Prev</div>
+          <div class="page-btn active">1</div>
+          <div class="page-btn">2</div>
+          <div class="page-btn">3</div>
+          <div class="page-btn">4</div>
+          <div class="page-btn arrow">Next</div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <h4>How Can We Help?</h4>
+      <p>
+        Adopt a pet<br>
+        Rehome a pet<br>
+        Adopt FAQ’s<br>
+        Rehome FAQ’s
+      </p>
+    </div>
+
+    <div>
+      <h4>Contact Us</h4>
+      <p>
+        House 12, Road 5, Baridhara, Dhaka - 1212<br>
+        +8801434884433<br>
+        PetPalSupport@gmail.com
+      </p>
+    </div>
+
+    <div>
+      <h4>Keep In Touch With Us</h4>
+      <input type="email" placeholder="E-mail Address"
+        style="padding:10px;width:70%;border-radius:6px;border:1px solid #aaa;">
+      <button class="btn btn-accept" style="margin-top:10px;">Subscribe</button>
+    </div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/adoption.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PetPal - Rehome Requests</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: #ffffff;
+            color: #222;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 80px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #ffffff;
+        }
+
+        .logo img {
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .icon-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid #d0d7e2;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .icon-button i {
+            font-size: 16px;
+            color: #007bff;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 12px 4px 4px;
+            border-radius: 999px;
+            border: 1px solid #d0d7e2;
+            background: #ffffff;
+        }
+
+        .avatar-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-pill span {
+            font-size: 13px;
+            font-weight: 500;
+            color: #222222;
+        }
+
+        /* Thin blue bar under header */
+        .blue-strip {
+            height: 16px;
+            background: #2f80c9;
+        }
+
+        /* MAIN ADMIN SECTION */
+        .admin-wrapper {
+            padding: 40px 80px 60px;
+        }
+
+        .admin-wrapper h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .admin-wrapper h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* REQUEST CARD */
+        .request-card {
+            border-radius: 14px;
+            border: 2px solid #bcd5f6;
+            background: #f9fbff;
+            padding: 24px 26px 18px;
+            margin-bottom: 32px;
+        }
+
+        .card-inner {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            column-gap: 32px;
+            row-gap: 6px;
+        }
+
+        .owner-column,
+        .animal-column {
+            font-size: 14px;
+        }
+
+        .owner-column h3,
+        .animal-column h3 {
+            margin-top: 0;
+            margin-bottom: 14px;
+            font-size: 20px;
+        }
+
+        .owner-info-item {
+            margin-bottom: 10px;
+        }
+
+        .label-bold {
+            font-weight: 600;
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 26px;
+            margin-bottom: 4px;
+        }
+
+        .info-row span {
+            font-size: 14px;
+        }
+
+        .info-row .label-bold {
+            margin-right: 4px;
+        }
+
+        .reason-label {
+            margin-top: 12px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .reason-box {
+            width: 100%;
+            height: 60px;
+            border-radius: 0;
+            border: 1px solid #cccccc;
+            padding: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: none;
+            background: #ffffff;
+        }
+
+        .card-actions {
+            margin-top: 14px;
+            text-align: right;
+        }
+
+        .btn {
+            padding: 7px 18px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .btn-accept {
+            background: #4ade80;
+            border: 1px solid #16a34a;
+        }
+
+        .btn-decline {
+            background: #f87171;
+            border: 1px solid #dc2626;
+            color: #ffffff;
+        }
+
+        /* FOOTER (simple, matching admin.html style) */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 60px;
+            background: #eef7ff;
+            margin-top: 40px;
+        }
+
+        footer div {
+            width: 30%;
+        }
+
+        footer h4 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="mainlogo.png" alt="PetPal Logo">
+        </div>
+
+        <div class="header-actions">
+            <button class="icon-button" aria-label="Notifications">
+                <i class="fa-regular fa-bell"></i>
+            </button>
+            <div class="user-pill">
+                <div class="avatar-circle">S</div>
+                <span>Sumaiya Gazi</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="blue-strip"></div>
+
+    <div class="admin-wrapper">
+        <h1>Admin Dashboard</h1>
+        <h2>Rehome Requests:</h2>
+
+        <!-- Dynamic Content -->
+        <div id="requests-container"></div>
+        <script src="js/api.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                const container = document.getElementById('requests-container');
+                container.innerHTML = '<p>Loading...</p>';
+
+                try {
+                    // Fetch all pets (as rehome requests are essentially the pets listed)
+                    // In a real app we might filter by status='pending'
+                    const pets = await API.getPets();
+                    container.innerHTML = '';
+
+                    if (pets.length === 0) {
+                        container.innerHTML = '<p>No rehome requests found.</p>';
+                        return;
+                    }
+
+                    pets.forEach(pet => {
+                        const card = document.createElement('div');
+                        card.className = 'request-card';
+                        card.innerHTML = `
+                        <div class="card-inner">
+                            <div class="owner-column">
+                                <h3>Owner Info</h3>
+                                <div class="owner-info-item">
+                                    <span class="label-bold">User ID:</span><br>
+                                    ${pet.user_id}
+                                </div>
+                            </div>
+                            <div class="animal-column">
+                                <h3>Animal Info:</h3>
+                                <div class="info-row">
+                                    <span><span class="label-bold">ID:</span> ${pet.rehome_id}</span>
+                                    <span><span class="label-bold">Type:</span> ${pet.type}</span>
+                                    <span><span class="label-bold">Gender:</span> ${pet.gender}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span><span class="label-bold">Name:</span> ${pet.name}</span>
+                                    <span><span class="label-bold">Age:</span> ${pet.age}</span>
+                                </div>
+                                <div class="reason-label">Reason:</div>
+                                <textarea class="reason-box" readonly>${pet.reason_behind_rehome}</textarea>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-decline" onclick="deletePet('${pet.rehome_id}')">Delete</button>
+                        </div>
+                    `;
+                        container.appendChild(card);
+                    });
+                } catch (error) {
+                    container.innerHTML = '<p>Error loading requests.</p>';
+                    console.error(error);
+                }
+            });
+
+            async function deletePet(id) {
+                if (!confirm('Are you sure?')) return;
+                try {
+                    await API.deletePet(id);
+                    window.location.reload();
+                } catch (e) {
+                    alert(e.message);
+                }
+            }
+        </script>
+    </div>
+
+    <footer>
+        <div>
+            <h4>How Can We Help?</h4>
+            <p>
+                Adopt a pet<br>
+                Rehome a pet<br>
+                Adopt FAQ’s<br>
+                Rehome FAQ’s
+            </p>
+        </div>
+
+        <div>
+            <h4>Contact Us</h4>
+            <p>
+                House 12, Road 5, Baridhara, Dhaka - 1212<br>
+                +8801434884433<br>
+                PetPalSupport@gmail.com
+            </p>
+        </div>
+
+        <div>
+            <h4>Keep In Touch With Us</h4>
+            <input type="email" placeholder="E-mail Address"
+                style="padding:10px;width:70%;border-radius:6px;border:1px solid #aaa;">
+            <button class="btn btn-accept" style="margin-top:10px;">Subscribe</button>
+        </div>
+    </footer>
+
+</body>
+
+</html>

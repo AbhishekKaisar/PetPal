@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PetPal - Give a New Life to Paw Friends</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: #ffffff;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 80px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #ffffff;
+        }
+
+        .logo img {
+            height: 48px;
+            object-fit: contain;
+        }
+
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #222222;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #007bff;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .icon-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid #d0d7e2;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .icon-button i {
+            font-size: 16px;
+            color: #007bff;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 12px 4px 4px;
+            border-radius: 999px;
+            border: 1px solid #d0d7e2;
+            background: #ffffff;
+        }
+
+        .avatar-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-pill span {
+            font-size: 13px;
+            font-weight: 500;
+            color: #222222;
+        }
+
+        .sub-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 80px;
+            background: #2f80c9;
+        }
+
+        .breadcrumb {
+            color: #ffffff;
+            font-size: 13px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 4px 10px 4px 16px;
+            width: 260px;
+        }
+
+        .search-wrapper input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .search-wrapper button {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .search-wrapper i {
+            font-size: 14px;
+            color: #2f80c9;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 80px;
+            background: #ffffff;
+        }
+
+        .hero img {
+            max-width: 100%;
+        }
+
+        .hero-content {
+            max-width: 460px;
+        }
+
+        .hero-title-main {
+            font-size: 40px;
+            margin: 0 0 8px;
+            color: #145c33;
+            font-weight: 600;
+        }
+
+        .hero-title-sub {
+            font-size: 38px;
+            margin: 0 0 24px;
+            color: #2f80c9;
+            font-weight: 700;
+        }
+
+        .hero p {
+            width: 100%;
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #2f80c9;
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #2f80c9;
+            border: 1.5px solid #2f80c9;
+        }
+
+        .hero-visual {
+            position: relative;
+            width: 430px;
+            height: 430px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 20%, #e2f1ff 0%, #66aee9 55%, #2f80c9 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .hero-visual img {
+            width: 360px;
+            position: relative;
+            bottom: -8px;
+        }
+
+        .hero-visual::before,
+        .hero-visual::after {
+            content: "";
+            position: absolute;
+            border-radius: 999px;
+            border: 5px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .hero-visual::before {
+            width: 260px;
+            height: 260px;
+            top: 40px;
+            left: -40px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .hero-visual::after {
+            width: 240px;
+            height: 240px;
+            top: -40px;
+            right: -40px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .floating-dots {
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dot-lg,
+        .dot-sm {
+            background: #e2f1ff;
+            border-radius: 50%;
+        }
+
+        .dot-lg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .dot-sm {
+            width: 8px;
+            height: 8px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            width: 80%;
+            line-height: 1.6;
+        }
+
+
+        .steps-section {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .step-box {
+            width: 220px;
+            background: #fff;
+            padding: 25px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+            border-radius: 12px;
+        }
+
+        .coexist-section {
+            padding: 70px 80px;
+            background: #ffffff;
+        }
+
+        .coexist-section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin: 0;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .coexist-section h2 span {
+            display: block;
+            margin-top: 6px;
+            font-size: 30px;
+            color: #145c33;
+        }
+
+        .coexist-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .left-illustration {
+            flex: 1;
+        }
+
+        .left-illustration img {
+            width: 100%;
+            max-width: 520px;
+            height: auto;
+            display: block;
+        }
+
+        .coexist-grid {
+            flex: 1.2;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .benefit-card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 0 14px rgba(0,0,0,0.06);
+            padding: 22px 22px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .benefit-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .benefit-header h4 {
+            margin: 0;
+            font-size: 16px;
+            color: #145c33;
+        }
+
+        .benefit-paw {
+            font-size: 26px;
+            color: #e5def5;
+        }
+
+        .benefit-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+            margin: 0 0 14px;
+        }
+
+        .benefit-animal {
+            align-self: flex-end;
+            font-size: 26px;
+            color: #9ca3af;
+        }
+
+        .reviews {
+            padding: 70px 80px 80px;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .reviews h2 {
+            font-size: 30px;
+            margin: 0;
+            color: #111827;
+        }
+
+        .reviews h2 span {
+            color: #145c33;
+        }
+
+        .review-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 40px;
+            flex-wrap: nowrap;
+        }
+
+        .review-card {
+            position: relative;
+            width: 260px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+            padding: 60px 24px 24px;
+            text-align: left;
+        }
+
+        .reviewer-avatar {
+            position: absolute;
+            top: -48px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid #ffffff;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.18);
+            background: #e5e7eb;
+        }
+
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .star-row {
+            text-align: center;
+            margin: 6px 0 8px;
+            color: #f59e0b;
+            font-size: 14px;
+        }
+
+        .reviewer-name {
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 12px;
+            color: #2563eb;
+        }
+
+        .review-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #4b5563;
+        }
+
+        .review-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        .review-nav.left {
+            left: -20px;
+        }
+
+        .review-nav.right {
+            right: -20px;
+        }
+
+        .review-nav i {
+            font-size: 16px;
+            color: #4b5563;
+        }
+
+        .write-review-btn {
+            margin-top: 32px;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 60px;
+            background: #eef7ff;
+            margin-top: 40px;
+        }
+
+        footer div {
+            width: 30%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="mainlogo.png" alt="PetPal Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="adoption.html">Adopt</a></li>
+                <li><a href="rehome.html">Rehome</a></li>
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#about-us">About Us</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <a href="login.html" style="text-decoration:none;">
+                <button class="btn-outline" style="width:auto;padding:8px 18px;">Login</button>
+            </a>
+            <a href="create_account.html" style="text-decoration:none;">
+                <button class="icon-button" aria-label="Create Account">
+                    <i class="fa-regular fa-user"></i>
+                </button>
+            </a>
+            <button class="icon-button" aria-label="Notifications">
+                <i class="fa-regular fa-bell"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="sub-bar">
+        <div class="breadcrumb">Home</div>
+        <div class="search-wrapper">
+            <input type="text" placeholder="search ..." />
+            <button type="button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title-main">Give a New Life to</h1>
+            <h2 class="hero-title-sub">Furry Friends</h2>
+            <p>
+                Pet adoption and rehoming are both vital aspects of animal welfare, offering hope
+                and a fresh start to pets in need. Open your heart and your home to a shelter pet.
+            </p>
+            <div class="hero-buttons">
+                <a href="adoption.html"><button class="btn btn-primary">Adopt Now</button></a>
+                <a href="rehome.html"><button class="btn btn-outline">Rehome Now</button></a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-dots">
+                <div class="dot-lg"></div>
+                <div class="dot-sm"></div>
+            </div>
+            <img src="dogandcat.png" alt="Dog and cat">
+        </div>
+    </section>
+
+    <section class="steps-section">
+        <h2>Adopt or Rehome a pet in just<br><span style="color:#007bff">3 Easy Steps</span></h2>
+
+        <div class="steps">
+            <div class="step-box">
+                <i class="fa-solid fa-user-plus" style="font-size: 28px;"></i>
+                <p>Set up your profile in minutes</p>
+            </div>
+
+            <div class="step-box">
+                <i class="fa-solid fa-house" style="font-size: 28px;"></i>
+                <p>Describe your home & routine</p>
+            </div>
+
+            <div class="step-box">
+                <i class="fa-solid fa-magnifying-glass" style="font-size: 28px;"></i>
+                <p>Start your search</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="coexist-section" id="about-us">
+        <h2>Peaceful Coexistence<span>Human &amp; Animals</span></h2>
+
+        <div class="coexist-content">
+            <div class="left-illustration">
+                <img src="Pet adoption illustration.png" alt="Pet adoption illustration">
+            </div>
+
+            <div class="coexist-grid">
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <i class="fa-solid fa-paw benefit-paw"></i>
+                        <h4>Emotional relationship</h4>
+                    </div>
+                    <p>
+                        The emotional bond between cats and humans is deeply rooted in felines'
+                        unconditional love and companionship.
+                    </p>
+                    <div class="benefit-animal">
+                        <i class="fa-solid fa-cat"></i>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <i class="fa-solid fa-paw benefit-paw"></i>
+                        <h4>Communication</h4>
+                    </div>
+                    <p>
+                        Animals can communicate better with people in such conditions, as verbal
+                        communication is often replaced by non‑verbal cues.
+                    </p>
+                    <div class="benefit-animal">
+                        <i class="fa-solid fa-dog"></i>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <i class="fa-solid fa-paw benefit-paw"></i>
+                        <h4>Children and pets</h4>
+                    </div>
+                    <p>
+                        Pets establish emotional attachments to children, and the relationship
+                        turns out positive in terms of affective aspects and reinforcement of the
+                        child's personality.
+                    </p>
+                    <div class="benefit-animal">
+                        <i class="fa-solid fa-dog"></i>
+                    </div>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <i class="fa-solid fa-paw benefit-paw"></i>
+                        <h4>Health</h4>
+                    </div>
+                    <p>
+                        Some studies suggest that owning a pet can lower blood pressure and
+                        improve heart health.
+                    </p>
+                    <div class="benefit-animal">
+                        <i class="fa-solid fa-cat"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews">
+        <h2>What People say <span>about us</span></h2>
+
+        <div class="review-row">
+            <!-- Card 1 -->
+            <div class="review-card">
+                <div class="review-nav left">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="reviewer-avatar">
+                    <img src="Ayesha.png" alt="Photo of Ayesha Rahman">
+                </div>
+                <div class="star-row">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="reviewer-name">Ayesha Rahman</div>
+                <p class="review-text">
+                    I adopted a rescued indie pup through PetPal. The team guided me with home checks
+                    and vaccination records, which made the whole process safe and easy. Now my dog
+                    is a part of our family in Dhanmondi.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="review-card">
+                <div class="reviewer-avatar">
+                    <img src="FarhanIslam.png" alt="Photo of Md. Farhan Islam">
+                </div>
+                <div class="star-row">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="reviewer-name">Md. Farhan Islam</div>
+                <p class="review-text">
+                    We rehomed our Persian cat using PetPal. They verified the new family in Uttara
+                    and kept us updated. Knowing she is safe and loved gives us real peace of mind.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="review-card">
+                <div class="reviewer-avatar">
+                    <img src="Nusrat.png" alt="Photo of Nusrat Jahan">
+                </div>
+                <div class="star-row">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="reviewer-name">Nusrat Jahan</div>
+                <p class="review-text">
+                    As a first-time pet parent in Chattogram, I had many questions. The PetPal team
+                    helped me find a vaccinated kitten and shared a care guide in Bangla. Their support
+                    after adoption was very reassuring.
+                </p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="review-card">
+                <div class="review-nav right">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="reviewer-avatar">
+                    <img src="Tanvir.png" alt="Photo of Tanvir Ahmed Khan">
+                </div>
+                <div class="star-row">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="reviewer-name">Tanvir Ahmed Khan</div>
+                <p class="review-text">
+                    I work long hours in Banani and wanted a companion who fits my routine. PetPal
+                    matched me with an adult dog from a foster home, and the transition was smooth for
+                    both of us.
+                </p>
+            </div>
+        </div>
+
+        <div class="write-review-btn">
+            <button class="btn btn-primary">Write a Review</button>
+        </div>
+    </section>
+
+    <footer>
+    <div>
+        <h4>How Can We Help?</h4>
+        <p>
+            Adopt a pet<br>
+            Rehome a pet<br>
+            Adopt FAQ’s<br>
+            Rehome FAQ’s
+        </p>
+    </div>
+
+    <div>
+        <h4>Contact Us</h4>
+        <p>
+            House 12, Road 5, Baridhara, Dhaka - 1212<br>
+            +8801434884433<br>
+            PetPalSupport@gmail.com
+        </p>
+    </div>
+
+    <div>
+        <h4>Keep In Touch With Us</h4>
+        <input type="email" placeholder="E-mail Address"
+               style="padding:10px;width:70%;border-radius:6px;border:1px solid #aaa;">
+        <button class="btn btn-accept" style="margin-top:10px;">Subscribe</button>
+    </div>
+</footer>
+
+</body>
+</html>

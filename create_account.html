@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - PetPal</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 750px;
+            height: 460px;
+            background: #ffffff;
+            border-radius: 16px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* LEFT PANEL */
+        .left-panel {
+            width: 50%;
+            background: linear-gradient(140deg, #e8f3ff, #ffffff);
+            position: relative;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .left-panel img.logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .dog-img {
+            width: 230px;
+            margin-top: 20px;
+        }
+
+        .reg-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2f80c9;
+            margin-top: 15px;
+        }
+
+        /* RIGHT PANEL */
+        .right-panel {
+            width: 50%;
+            padding: 40px 40px;
+        }
+
+        .right-panel h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .input-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 10px 12px;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-box i {
+            font-size: 15px;
+            color: #444;
+        }
+
+        .input-box input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .terms {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            margin: 15px 0;
+        }
+
+        .terms a {
+            color: #2f80c9;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: #2f80c9;
+            color: white;
+            padding: 12px 0;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .divider {
+            width: 100%;
+            text-align: center;
+            margin: 18px 0;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .social-login {
+            text-align: center;
+        }
+
+        .social-icons i {
+            font-size: 22px;
+            margin: 0 10px;
+            cursor: pointer;
+            color: #2f80c9;
+        }
+
+        .signin-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .signin-link a {
+            color: #2f80c9;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT SIDE -->
+        <div class="left-panel">
+            <img src="mainlogo.png" alt="PetPal" class="logo">
+
+            <img src="DogPic.png" class="dog-img" alt="Dog">
+
+            <div class="reg-text">Register Now</div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-panel">
+            <h2>Create your account</h2>
+
+            <div class="input-box">
+                <i class="fa-regular fa-user"></i>
+                <input type="text" placeholder="Full Name">
+            </div>
+
+            <div class="input-box">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="email" placeholder="Email Address">
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" placeholder="Password">
+            </div>
+
+            <div class="terms">
+                <input type="checkbox">
+                <label>I agree to all <a href="#">Terms & Conditions</a></label>
+            </div>
+
+            <button class="btn-primary">Create Account</button>
+
+            <div class="divider">Or Sign Up with</div>
+
+            <div class="social-login">
+                <div class="social-icons">
+                    <i class="fa-brands fa-google"></i>
+                    <i class="fa-brands fa-facebook"></i>
+                </div>
+            </div>
+
+            <div class="signin-link">
+                Already have an account? <a href="login.html">Sign in</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        document.querySelector('.btn-primary').addEventListener('click', async () => {
+            const inputs = document.querySelectorAll('.input-box input');
+            const fullName = inputs[0].value;
+            const email = inputs[1].value;
+            const password = inputs[2].value;
+
+            if (!fullName || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            try {
+                const result = await API.register(fullName, email, password);
+                alert('Account created! Please log in.');
+                window.location.href = 'login.html';
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+</body>
+
+</html>
